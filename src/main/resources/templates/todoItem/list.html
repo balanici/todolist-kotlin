@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{todoItem.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="flex flex-wrap mb-6">
+                <h1 th:text="#{todoItem.list.headline}" class="grow text-3xl md:text-4xl font-medium mb-2" />
+                <div>
+                    <a th:href="@{/todoItems/add}" th:text="#{todoItem.list.createNew}" class="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2" />
+                </div>
+            </div>
+            <div th:if="${todoItems.empty}" th:text="#{todoItem.list.empty}" />
+            <div th:if="${!todoItems.empty}" class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th th:text="#{todoItem.id.label}" scope="col" class="text-left p-2" />
+                            <th th:text="#{todoItem.title.label}" scope="col" class="text-left p-2" />
+                            <th th:text="#{todoItem.description.label}" scope="col" class="text-left p-2" />
+                            <th th:text="#{todoItem.status.label}" scope="col" class="text-left p-2" />
+                            <th th:text="#{todoItem.itemCategory.label}" scope="col" class="text-left p-2" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-t-2 border-black">
+                        <tr th:each="todoItem : ${todoItems}" class="odd:bg-gray-100">
+                            <td th:text="${todoItem.id}" class="p-2" />
+                            <td th:text="${todoItem.title}" class="p-2" />
+                            <td th:text="${todoItem.description}" class="p-2" />
+                            <td th:text="${todoItem.status}" class="p-2" />
+                            <td th:text="${todoItem.itemCategory}" class="p-2" />
+                            <td class="p-2">
+                                <div class="float-right whitespace-nowrap">
+                                    <a th:href="@{/todoItems/edit/{id}(id=${todoItem.id})}" th:text="#{todoItem.list.edit}" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm" />
+                                    <form th:action="@{/todoItems/delete/{id}(id=${todoItem.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm inline">
+                                        <button th:text="#{todoItem.list.delete}" type="submit" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
