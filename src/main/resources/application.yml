@@ -1,12 +1,14 @@
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/todo-app}
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5433/todo-app}
     username: ${JDBC_DATABASE_USERNAME:postgres}
-    password: ${JDBC_DATABASE_PASSWORD:<<YOUR_PASSWORD>>}
+    password: ${JDBC_DATABASE_PASSWORD:P4ssword!}
     dbcp2:
       max-wait-millis: 30000
       validation-query: select 1
       validation-query-timeout: 30
+  devtools:
+    add-properties: false
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,3 +25,16 @@ spring:
       lifecycle-management: start-only
 springdoc:
   pathsToMatch: /api/**
+
+
+javax:
+  persistence:
+    jdbc:
+      driver: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5433/todo-app
+
+org:
+  hibernate:
+    dialect:
+      Dialect: org.hibernate.dialect.PostgreSQLDialect
+
